@@ -1,0 +1,5 @@
+version: '3.4'
+services:
+  devtools:
+    build: .
+    image: okteto/desk:0.1.1
