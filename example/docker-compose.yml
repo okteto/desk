@@ -1,0 +1,13 @@
+version: "3"
+services:
+  web:
+    image: okteto/sample-desk
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    ports:
+      - "80:80"
+  redis:
+    image: redis
