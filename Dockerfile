@@ -7,9 +7,9 @@ COPY --from=docker /usr/local/bin/docker /usr/local/bin/docker
 
 # install golang & ruby
 RUN apt-get -y update
-RUN apt-get install -y build-essential git-core curl
+RUN apt-get install -y build-essential git-core curl zlib1g-dev
 RUN apt-get install -y golang-go
-RUN apt-get install -y ruby-full
+RUN apt-get install -y ruby-full && gem install bundler 
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
