@@ -7,7 +7,7 @@ COPY --from=docker /usr/local/bin/docker /usr/local/bin/docker
 
 # install golang & ruby
 RUN apt-get -y update
-RUN apt-get install -y build-essential git-core curl
+RUN apt-get install -y build-essential git-core curl vim
 RUN apt-get install -y golang-go
 RUN apt-get install -y ruby-full
 
