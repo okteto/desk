@@ -9,7 +9,8 @@ COPY --from=docker /usr/local/bin/docker /usr/local/bin/docker
 RUN apt-get -y update
 RUN apt-get install -y build-essential git-core curl zlib1g-dev
 RUN apt-get install -y golang-go
-RUN apt-get install -y ruby-full && gem install bundler 
+RUN apt-get install -y ruby-full && gem install bundler rake && gem update --system
+RUN apt-get install -y libsqlite3-dev
 
 # install nodejs 10 and yarn
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -24,6 +25,9 @@ RUN chmod +x /usr/local/bin/docker-compose
 # install kubectl
 RUN curl -L "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
 RUN chmod +x /usr/local/bin/kubectl
+
+# install vim
+RUN apt-get install -y vim
 
 # setup okteto message
 COPY bashrc /root/.bashrc
