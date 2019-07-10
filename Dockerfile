@@ -5,10 +5,17 @@ FROM ubuntu:18.04
 # install docker client
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/docker
 
-# install golang & ruby
+# install basics
 RUN apt-get -y update
-RUN apt-get install -y build-essential git-core curl zlib1g-dev
-RUN apt-get install -y golang-go
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential git-core curl zlib1g-dev wget vim
+
+# install go
+RUN wget https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz -q && \
+    tar -C /usr/local -xzf go1.12.7.linux-amd64.tar.gz && \
+    rm -rf go1.12.7.linux-amd64.tar.gz
+
+# install ruby
 RUN apt-get install -y ruby-full && gem install bundler rake && gem update --system
 RUN apt-get install -y libsqlite3-dev
 
@@ -26,8 +33,9 @@ RUN chmod +x /usr/local/bin/docker-compose
 RUN curl -L "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
 RUN chmod +x /usr/local/bin/kubectl
 
-# install vim
-RUN apt-get install -y vim
+# Setup the path
+ENV PATH="/usr/local/go/bin:${PATH}"
+WORKDIR /usr/src/app
 
 # setup okteto message
 COPY bashrc /root/.bashrc
